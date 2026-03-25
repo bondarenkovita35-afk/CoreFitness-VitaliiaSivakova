@@ -6,10 +6,10 @@
     <title>@ViewData["Title"] - CoreFitness</title>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
-<body>
+<body class="cf-body">
     @await Html.PartialAsync("~/Views/Shared/Sections/_Navbar.cshtml")
 
-    <main>
+    <main class="cf-main">
         @RenderBody()
     </main>
 

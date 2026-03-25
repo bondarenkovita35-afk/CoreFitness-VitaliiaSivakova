@@ -1,20 +1,112 @@
-body {
+/* ------------------------------
+   BAZA
+--------------------------------- */
+* {
+    box-sizing: border-box;
+}
+
+html, body {
     margin: 0;
-    font-family: Arial, sans-serif;
+    padding: 0;
 }
 
-nav {
+    body.cf-body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #ffffff;
+        color: #111111;
+    }
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.cf-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-left: 24px;
+    padding-right: 24px;
+}
+
+.cf-main {
+    min-height: calc(100vh - 140px);
+}
+
+/* ------------------------------
+   HEADER
+--------------------------------- */
+.cf-header {
+    border-bottom: 1px solid #e5e5e5;
+    background-color: #ffffff;
+}
+
+.cf-header-inner {
     display: flex;
-    gap: 16px;
-    padding: 20px;
-    background: #f5f5f5;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    min-height: 80px;
 }
 
-main {
-    padding: 40px;
+.cf-logo {
+    font-size: 24px;
+    font-weight: 700;
 }
 
-footer {
-    padding: 20px;
-    background: #f5f5f5;
+.cf-nav {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.cf-nav-link {
+    font-size: 15px;
+    font-weight: 500;
+    color: #333333;
+}
+
+    .cf-nav-link:hover {
+        color: #000000;
+    }
+
+/* ------------------------------
+   FOOTER
+--------------------------------- */
+.cf-footer {
+    border-top: 1px solid #e5e5e5;
+    background-color: #fafafa;
+}
+
+.cf-footer-inner {
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+}
+
+.cf-footer-text {
+    margin: 0;
+    font-size: 14px;
+    color: #666666;
+}
+
+/* ------------------------------
+   PAGE SIMPLE
+--------------------------------- */
+.cf-page {
+    padding-top: 48px;
+    padding-bottom: 48px;
+}
+
+.cf-page-title {
+    margin: 0 0 16px 0;
+    font-size: 40px;
+    font-weight: 700;
+}
+
+.cf-page-text {
+    margin: 0;
+    font-size: 18px;
+    color: #555555;
 }
