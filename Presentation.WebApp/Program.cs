@@ -1,6 +1,12 @@
+using Infrastructure.Extensions;
+
 var builder = WebApplication.CreateBuilder(args);
 
+// Lägger till stöd för MVC
 builder.Services.AddControllersWithViews();
+
+// Lägger till Infrastructure och databas/Identity
+builder.Services.AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
 
@@ -15,6 +21,8 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+// Aktiverar inloggning och behörighet
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
