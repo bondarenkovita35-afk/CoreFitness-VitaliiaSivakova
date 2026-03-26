@@ -4,17 +4,18 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - CoreFitness</title>
+
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body class="cf-body">
+
     @await Html.PartialAsync("~/Views/Shared/Sections/_Navbar.cshtml")
 
-    <main class="cf-main">
+    <main>
         @RenderBody()
     </main>
 
     @await Html.PartialAsync("~/Views/Shared/Sections/_Footer.cshtml")
 
-    <script src="~/js/site.js" asp-append-version="true"></script>
 </body>
 </html>

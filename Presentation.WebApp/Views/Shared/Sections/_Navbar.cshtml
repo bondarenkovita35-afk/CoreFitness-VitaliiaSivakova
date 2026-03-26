@@ -1,13 +1,23 @@
 ﻿<header class="cf-header">
     <div class="cf-container cf-header-inner">
-        <a asp-controller="Home" asp-action="Index" class="cf-logo">CoreFitness</a>
+
+        <div class="cf-logo-wrap">
+            <span class="cf-logo-dot"></span>
+            <span class="cf-logo-text">CoreFitness</span>
+        </div>
 
         <nav class="cf-nav">
-            <a asp-controller="Home" asp-action="Index" class="cf-nav-link">Home</a>
-            <a asp-controller="Memberships" asp-action="Index" class="cf-nav-link">Memberships</a>
-            <a asp-controller="Training" asp-action="Index" class="cf-nav-link">Training</a>
-            <a asp-controller="CustomerService" asp-action="Index" class="cf-nav-link">Customer Service</a>
-            <a asp-controller="MyAccount" asp-action="Index" class="cf-nav-link">My Account</a>
+            <a asp-controller="Home" asp-action="Index">Home</a>
+            <a asp-controller="Memberships" asp-action="Index">Memberships</a>
+            <a asp-controller="Training" asp-action="Index">Training</a>
+            <a asp-controller="CustomerService" asp-action="Index">Customer Service</a>
+            <a asp-controller="MyAccount" asp-action="Index">My Account</a>
         </nav>
+
+        <div class="cf-nav-actions">
+            <a class="cf-link-muted">Become Member</a>
+            <a class="cf-btn-accent">Sign In</a>
+        </div>
+
     </div>
 </header>

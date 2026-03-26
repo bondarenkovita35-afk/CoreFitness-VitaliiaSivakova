@@ -2,9 +2,99 @@
     ViewData["Title"] = "Home";
 }
 
-<section class="cf-page">
+<section class="cf-home-hero">
+    <div class="cf-container cf-home-hero-inner">
+        <div class="cf-home-hero-content">
+            <p class="cf-section-kicker">Healthy lifestyle</p>
+            <h1 class="cf-home-title">Build Strength Boost Confidence Today!</h1>
+            <p class="cf-home-text">
+                Achieve your fitness goals with expert coaching, modern equipment,
+                and a motivating environment built for real progress.
+            </p>
+
+            <ul class="cf-feature-list">
+                <li>Professional trainers</li>
+                <li>Modern equipment</li>
+                <li>Flexible membership plans</li>
+                <li>Personal support</li>
+            </ul>
+
+            <a asp-controller="Memberships" asp-action="Index" class="cf-btn-primary">
+                Get Started
+            </a>
+        </div>
+
+        <div class="cf-home-hero-image-wrap">
+            <img src="~/images/home-hero.jpg" alt="Fitness training" class="cf-home-hero-image" />
+        </div>
+    </div>
+</section>
+
+<section class="cf-highlight-bar">
+    <div class="cf-container cf-highlight-bar-inner">
+        <span>Experts</span>
+        <span>Programs</span>
+        <span>Coaching</span>
+        <span>Training</span>
+        <span>Results</span>
+        <strong>Modern Equipment</strong>
+    </div>
+</section>
+
+<section class="cf-section">
+    <div class="cf-container cf-two-col">
+        <div class="cf-image-stack">
+            <img src="~/images/coach-1.jpg" alt="Coach 1" class="cf-stack-img cf-stack-img-main" />
+            <img src="~/images/coach-2.jpg" alt="Coach 2" class="cf-stack-img cf-stack-img-small" />
+        </div>
+
+        <div class="cf-section-content">
+            <span class="cf-section-label">About Us</span>
+            <h2 class="cf-section-title">Elevating Fitness Journey with Expert Guidance</h2>
+            <p class="cf-section-text">
+                Our supportive team and modern training environment help members build
+                strength, improve health, and stay motivated every day.
+            </p>
+            <p class="cf-section-text">
+                We focus on practical routines, smart coaching and long-term fitness success.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="cf-section">
     <div class="cf-container">
-        <h1 class="cf-page-title">Home</h1>
-        <p class="cf-page-text">Welcome to CoreFitness.</p>
+        <div class="cf-section-heading-center">
+            <span class="cf-section-label">Our Program</span>
+            <h2 class="cf-section-title-center">Professional training program for stronger health</h2>
+        </div>
+
+        <div class="cf-card-grid cf-card-grid-3">
+            <article class="cf-photo-card">
+                <img src="~/images/program-1.jpg" alt="Program 1" />
+            </article>
+            <article class="cf-photo-card">
+                <img src="~/images/program-2.jpg" alt="Program 2" />
+            </article>
+            <article class="cf-photo-card">
+                <img src="~/images/program-3.jpg" alt="Program 3" />
+            </article>
+        </div>
+    </div>
+</section>
+
+<section class="cf-section">
+    <div class="cf-container">
+        <div class="cf-section-heading-center">
+            <span class="cf-section-label">Our Store</span>
+            <h2 class="cf-section-title-center">High quality fitness products built for results</h2>
+        </div>
+
+        <div class="cf-product-row">
+            <img src="~/images/product-1.png" alt="Dumbbell" class="cf-product-img" />
+            <img src="~/images/product-2.png" alt="Bag" class="cf-product-img" />
+            <img src="~/images/product-3.png" alt="Band" class="cf-product-img" />
+            <img src="~/images/product-4.png" alt="Treadmill" class="cf-product-img" />
+        </div>
     </div>
 </section>
