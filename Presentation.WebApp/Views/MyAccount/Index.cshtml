@@ -2,93 +2,88 @@
     ViewData["Title"] = "My Account";
 }
 
-<section class="cf-section">
+<section class="cf-page-section">
     <div class="cf-container">
-        <div class="cf-section-heading-center">
-            <h1 class="cf-page-title-center">My Account</h1>
+        <div class="cf-section-heading">
+            <h1>My Account</h1>
         </div>
 
         <div class="cf-account-layout">
             <aside class="cf-account-sidebar">
-                <img src="~/images/account-user.jpg" alt="User" class="cf-account-user-image" />
+                <img src="~/images/profile-image-avatar.png" alt="Profile avatar" class="cf-account-avatar" />
 
                 <div class="cf-account-menu">
-                    <div class="cf-account-menu-head">Menu Options</div>
-                    <a href="#" class="cf-account-menu-link cf-account-menu-link-active">About Me</a>
-                    <a href="#" class="cf-account-menu-link">My Membership</a>
-                    <a href="#" class="cf-account-menu-link">My Bookings</a>
-                    <a href="#" class="cf-account-menu-link">Sign Out</a>
-                    <a href="#" class="cf-account-delete">Delete Account</a>
+                    <div class="cf-account-menu-title">Menu Options</div>
+                    <a class="cf-account-link active">About Me</a>
+                    <a class="cf-account-link">My Membership</a>
+                    <a class="cf-account-link">My Bookings</a>
+                    <a class="cf-account-link">Sign Out</a>
+                    <a class="cf-account-link cf-danger-link">Remove Account</a>
                 </div>
             </aside>
 
-            <div class="cf-account-main">
-                <h2 class="cf-section-title">About Me</h2>
+            <div class="cf-account-content">
+                <div class="cf-account-form-block">
+                    <h2>About Me</h2>
 
-                <form class="cf-form">
-                    <div class="cf-form-row">
-                        <div class="cf-form-group">
-                            <label>First Name</label>
-                            <input class="cf-input" type="text" placeholder="Enter First Name" />
+                    <form class="cf-form">
+                        <div class="cf-form-grid">
+                            <div>
+                                <label>First Name</label>
+                                <input class="cf-input" type="text" placeholder="Enter First Name" />
+                            </div>
+                            <div>
+                                <label>Last Name</label>
+                                <input class="cf-input" type="text" placeholder="Enter Last Name" />
+                            </div>
+                            <div>
+                                <label>Email Address</label>
+                                <input class="cf-input" type="email" placeholder="Enter Email Address" />
+                            </div>
+                            <div>
+                                <label>Phone Number</label>
+                                <input class="cf-input" type="text" placeholder="Enter Phone Number" />
+                            </div>
                         </div>
-                        <div class="cf-form-group">
-                            <label>Last Name</label>
-                            <input class="cf-input" type="text" placeholder="Enter Last Name" />
-                        </div>
-                    </div>
 
-                    <div class="cf-form-row">
-                        <div class="cf-form-group">
-                            <label>Email Address</label>
-                            <input class="cf-input" type="email" placeholder="Enter Email Address" />
+                        <div>
+                            <label>Profile Image</label>
+                            <input class="cf-input" type="file" />
                         </div>
-                        <div class="cf-form-group">
-                            <label>Phone Number</label>
-                            <input class="cf-input" type="text" placeholder="Enter Phone Number" />
-                        </div>
-                    </div>
 
-                    <div class="cf-form-group">
-                        <label>Profile Image</label>
-                        <div class="cf-upload-row">
-                            <input class="cf-input" type="text" placeholder="Upload Profile Image" />
-                            <button type="button" class="cf-upload-btn">Browse</button>
-                        </div>
-                    </div>
-
-                    <div class="cf-account-save">
-                        <button type="submit" class="cf-btn-primary cf-btn-no-border">Save</button>
-                    </div>
-                </form>
+                        <button type="submit" class="cf-btn-submit cf-save-btn">Save</button>
+                    </form>
+                </div>
 
                 <div class="cf-account-stats">
-                    <h2 class="cf-section-title">My Statistics</h2>
+                    <h2>My Statistics</h2>
 
                     <div class="cf-stat-item">
-                        <div class="cf-stat-label-row">
+                        <div class="cf-stat-row">
                             <span>Check-in (last 30 days)</span>
                             <span>25</span>
                         </div>
-                        <div class="cf-progress"><div class="cf-progress-fill" style="width: 85%;"></div></div>
+                        <div class="cf-progress"><span style="width: 82%"></span></div>
                     </div>
 
                     <div class="cf-stat-item">
-                        <div class="cf-stat-label-row">
+                        <div class="cf-stat-row">
                             <span>Weight Goal</span>
                             <span>50%</span>
                         </div>
-                        <div class="cf-progress"><div class="cf-progress-fill" style="width: 50%;"></div></div>
+                        <div class="cf-progress"><span style="width: 50%"></span></div>
                     </div>
 
                     <div class="cf-stat-item">
-                        <div class="cf-stat-label-row">
+                        <div class="cf-stat-row">
                             <span>Current BMI</span>
                             <span>27</span>
                         </div>
-                        <div class="cf-progress"><div class="cf-progress-fill" style="width: 65%;"></div></div>
+                        <div class="cf-progress"><span style="width: 66%"></span></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
+

@@ -1,17 +1,17 @@
 ﻿<header class="cf-header">
     <div class="cf-container cf-header-inner">
 
-        <div class="cf-logo-wrap">
-            <span class="cf-logo-dot"></span>
-            <span class="cf-logo-text">CoreFitness</span>
-        </div>
+        <a asp-controller="Home" asp-action="Index" class="cf-logo-wrap">
+            <img src="~/images/logotype.png" alt="CoreFitness logo" class="cf-logo-image" />
+            
+        </a>
 
         <nav class="cf-nav">
-            <a asp-controller="Home" asp-action="Index">Home</a>
+            <a asp-controller="Home" asp-action="Index">Fitness Centers</a>
             <a asp-controller="Memberships" asp-action="Index">Memberships</a>
             <a asp-controller="Training" asp-action="Index">Training</a>
             <a asp-controller="CustomerService" asp-action="Index">Customer Service</a>
-            <a asp-controller="MyAccount" asp-action="Index">My Account</a>
+            <a asp-controller="Home" asp-action="Index">Store</a>
         </nav>
 
         <div class="cf-nav-actions">

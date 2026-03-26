@@ -51,25 +51,41 @@ textarea {
     gap: 20px;
 }
 
+/* LOGO */
 .cf-logo-wrap {
     display: flex;
     align-items: center;
-    gap: 8px;
+    transform: scale(1.8);
+    transform-origin: left center;
 }
+
+
+.cf-logo-image {
+    width: auto;
+    height: 60px;
+    display: block;
+   transform: scale(2.5);
+   transform-origin: left center;
+
+}
+
+
+.cf-logo-text {
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+}
+
 
 .cf-logo-dot {
     width: 18px;
     height: 18px;
     background: #c6ff00;
     border-radius: 50%;
-    flex-shrink: 0;
+    box-shadow: 0 0 10px #c6ff00;
 }
 
-.cf-logo-text {
-    font-weight: 700;
-    color: #fff;
-}
-
+/* NAV */
 .cf-nav {
     display: flex;
     gap: 24px;
@@ -81,6 +97,7 @@ textarea {
         font-size: 14px;
     }
 
+/* BUTTONS */
 .cf-nav-actions {
     display: flex;
     gap: 12px;
@@ -852,3 +869,79 @@ textarea {
     }
 }
 
+.cf-logo-image {
+    width: 26px;
+    height: 26px;
+    object-fit: contain;
+}
+
+.cf-footer-map-wrap {
+    margin: 16px 0;
+}
+
+.cf-footer-map-image {
+    width: 100%;
+    max-width: 220px;
+    border-radius: 12px;
+    display: block;
+}
+
+.cf-dark-banner {
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: 0 14px 34px rgba(0,0,0,0.08);
+    height: 320px;
+}
+
+.cf-dark-banner-image {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    
+}
+/* ===== AUTH ===== */
+
+.cf-auth {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 80px 20px;
+}
+
+.cf-auth-card {
+    background: #11131f;
+    padding: 40px;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 400px;
+    color: #fff;
+    text-align: center;
+}
+
+    .cf-auth-card h2 {
+        margin-bottom: 10px;
+    }
+
+.cf-muted {
+    color: #aaa;
+    margin-bottom: 20px;
+}
+
+.cf-input {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 12px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+}
+
+.cf-auth-link {
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+    .cf-auth-link a {
+        color: #c6ff00;
+    }
