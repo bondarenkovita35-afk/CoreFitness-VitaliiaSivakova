@@ -974,3 +974,13 @@ textarea {
 .cf-nav-actions form {
     margin: 0;
 }
+/* Träningskort */
+.cf-card h3 {
+    margin-top: 0;
+    margin-bottom: 12px;
+}
+
+.cf-card p {
+    margin-bottom: 10px;
+    line-height: 1.6;
+}

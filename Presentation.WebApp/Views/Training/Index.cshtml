@@ -1,10 +1,31 @@
-﻿@{
+﻿@model List<Domain.Entities.TrainingClass>
+
+@{
     ViewData["Title"] = "Training";
 }
 
-<section class="cf-page">
+<section class="cf-page-section">
     <div class="cf-container">
-        <h1 class="cf-page-title">Training</h1>
-        <p class="cf-page-text">Training classes page.</p>
+        <div class="cf-section-heading">
+            <h1>Training Classes</h1>
+            <p class="cf-section-text">Choose a class and start your fitness journey.</p>
+        </div>
+
+        <div class="cf-card-grid cf-card-grid-3">
+            @* Visar alla träningspass *@
+            @foreach (var trainingClass in Model)
+            {
+                <div class="cf-card">
+                    <h3>@trainingClass.Title</h3>
+                    <p>@trainingClass.Description</p>
+
+                    <p><strong>Category:</strong> @trainingClass.Category</p>
+                    <p><strong>Instructor:</strong> @trainingClass.InstructorName</p>
+                    <p><strong>Time:</strong> @trainingClass.StartTime.ToString("yyyy-MM-dd HH:mm")</p>
+
+                    <a class="cf-btn-primary">Book Class</a>
+                </div>
+            }
+        </div>
     </div>
 </section>

@@ -1,3 +1,6 @@
+using Infrastructure.Persistence.Contexts;
+using Microsoft.EntityFrameworkCore;
+using Presentation.WebApp.Data;
 using Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,5 +31,14 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+// Lägger in testdata i databasen vid start
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<ApplicationDbContext>();
+
+    await DbSeeder.SeedTrainingClassesAsync(context);
+}
 
 app.Run();
