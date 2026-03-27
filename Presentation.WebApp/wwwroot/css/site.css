@@ -945,3 +945,32 @@ textarea {
     .cf-auth-link a {
         color: #c6ff00;
     }
+/* ===== AUTH VALIDATION ===== */
+
+.cf-validation-summary {
+    color: #ffb3b3;
+    font-size: 14px;
+    margin-bottom: 14px;
+    text-align: left;
+}
+
+.cf-validation-error {
+    display: block;
+    color: #ffb3b3;
+    font-size: 13px;
+    margin-top: 6px;
+    text-align: left;
+}
+
+.cf-remember-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #fff;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+/* Formular i navbar */
+.cf-nav-actions form {
+    margin: 0;
+}

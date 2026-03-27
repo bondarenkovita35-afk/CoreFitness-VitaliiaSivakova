@@ -1,4 +1,6 @@
-﻿@{
+﻿@model Presentation.WebApp.Models.RegisterViewModel
+
+@{
     ViewData["Title"] = "Sign Up";
 }
 
@@ -7,17 +9,51 @@
         <h2>Create Account</h2>
         <p class="cf-muted">Join CoreFitness today</p>
 
-        <form>
-            <input type="text" placeholder="Full Name" class="cf-input" />
-            <input type="email" placeholder="Email" class="cf-input" />
-            <input type="password" placeholder="Password" class="cf-input" />
+        @* Visar alla valideringsfel överst *@
+        <div asp-validation-summary="ModelOnly" class="cf-validation-summary"></div>
 
-            <button class="cf-btn-primary">Sign Up</button>
+        <form asp-action="SignUp" asp-controller="Auth" method="post" class="cf-form">
+            @* Förnamn *@
+            <div>
+                <input asp-for="FirstName" class="cf-input" placeholder="First Name" />
+                <span asp-validation-for="FirstName" class="cf-validation-error"></span>
+            </div>
+
+            @* Efternamn *@
+            <div>
+                <input asp-for="LastName" class="cf-input" placeholder="Last Name" />
+                <span asp-validation-for="LastName" class="cf-validation-error"></span>
+            </div>
+
+            @* E-post *@
+            <div>
+                <input asp-for="Email" class="cf-input" placeholder="Email" />
+                <span asp-validation-for="Email" class="cf-validation-error"></span>
+            </div>
+
+            @* Lösenord *@
+            <div>
+                <input asp-for="Password" class="cf-input" placeholder="Password" />
+                <span asp-validation-for="Password" class="cf-validation-error"></span>
+            </div>
+
+            @* Bekräfta lösenord *@
+            <div>
+                <input asp-for="ConfirmPassword" class="cf-input" placeholder="Confirm Password" />
+                <span asp-validation-for="ConfirmPassword" class="cf-validation-error"></span>
+            </div>
+
+            @* Skickar formuläret *@
+            <button type="submit" class="cf-btn-primary">Sign Up</button>
         </form>
 
         <p class="cf-auth-link">
             Already have an account?
-            <a href="/Auth/SignIn">Sign In</a>
+            <a asp-controller="Auth" asp-action="SignIn">Sign In</a>
         </p>
     </div>
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

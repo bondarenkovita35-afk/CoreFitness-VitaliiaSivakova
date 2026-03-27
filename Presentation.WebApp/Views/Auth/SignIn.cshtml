@@ -1,4 +1,6 @@
-﻿@{
+﻿@model Presentation.WebApp.Models.LoginViewModel
+
+@{
     ViewData["Title"] = "Sign In";
 }
 
@@ -7,16 +9,39 @@
         <h2>Welcome Back</h2>
         <p class="cf-muted">Sign in to your account</p>
 
-        <form>
-            <input type="email" placeholder="Email" class="cf-input" />
-            <input type="password" placeholder="Password" class="cf-input" />
+        @* Visar alla valideringsfel överst *@
+        <div asp-validation-summary="ModelOnly" class="cf-validation-summary"></div>
 
-            <button class="cf-btn-primary">Sign In</button>
+        <form asp-action="SignIn" asp-controller="Auth" method="post" class="cf-form">
+            @* E-post *@
+            <div>
+                <input asp-for="Email" class="cf-input" placeholder="Email" />
+                <span asp-validation-for="Email" class="cf-validation-error"></span>
+            </div>
+
+            @* Lösenord *@
+            <div>
+                <input asp-for="Password" class="cf-input" placeholder="Password" />
+                <span asp-validation-for="Password" class="cf-validation-error"></span>
+            </div>
+
+            @* Kom ihåg mig *@
+            <div class="cf-remember-wrap">
+                <input asp-for="RememberMe" />
+                <label asp-for="RememberMe">Remember me</label>
+            </div>
+
+            @* Skickar formuläret *@
+            <button type="submit" class="cf-btn-primary">Sign In</button>
         </form>
 
         <p class="cf-auth-link">
             Don’t have an account?
-            <a href="/Auth/SignUp">Sign Up</a>
+            <a asp-controller="Auth" asp-action="SignUp">Sign Up</a>
         </p>
     </div>
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

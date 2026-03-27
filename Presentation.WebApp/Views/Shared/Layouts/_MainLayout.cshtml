@@ -17,5 +17,7 @@
 
     @await Html.PartialAsync("~/Views/Shared/Sections/_Footer.cshtml")
 
+    @await RenderSectionAsync("Scripts", required: false)
+
 </body>
 </html>

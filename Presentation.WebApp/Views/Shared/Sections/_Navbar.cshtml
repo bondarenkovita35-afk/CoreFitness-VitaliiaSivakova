@@ -1,4 +1,8 @@
-﻿<header class="cf-header">
+﻿@using Infrastructure.Identity
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+<header class="cf-header">
     <div class="cf-container cf-header-inner">
 
         <a asp-controller="Home" asp-action="Index" class="cf-logo-wrap">
@@ -15,9 +19,20 @@
         </nav>
 
         <div class="cf-nav-actions">
-            <a class="cf-link-muted">Become Member</a>
-            <a class="cf-btn-accent">Sign In</a>
-        </div>
+            @* Visar olika knappar beroende på om användaren är inloggad *@
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <span class="cf-link-muted">Hej @User.Identity?.Name</span>
 
+                <form asp-controller="Auth" asp-action="Logout" method="post">
+                    <button type="submit" class="cf-btn-accent">Logout</button>
+                </form>
+            }
+            else
+            {
+                <a asp-controller="Auth" asp-action="SignIn" class="cf-link-muted">Sign In</a>
+                <a asp-controller="Auth" asp-action="SignUp" class="cf-btn-accent">Sign Up</a>
+            }
+        </div>
     </div>
 </header>
