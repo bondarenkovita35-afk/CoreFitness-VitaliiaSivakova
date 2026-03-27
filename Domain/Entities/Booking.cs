@@ -13,4 +13,7 @@ public class Booking : BaseEntity
 
     // Tidpunkt för bokning
     public DateTime BookedAt { get; set; } = DateTime.UtcNow;
+
+    // Navigation till träningspasset
+    public TrainingClass TrainingClass { get; set; } = null!;
 }

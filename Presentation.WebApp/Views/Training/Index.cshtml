@@ -11,6 +11,14 @@
             <p class="cf-section-text">Choose a class and start your fitness journey.</p>
         </div>
 
+        @* Visar meddelande efter bokning *@
+        @if (TempData["BookingMessage"] != null)
+        {
+            <div class="cf-booking-message">
+                @TempData["BookingMessage"]
+            </div>
+        }
+
         <div class="cf-card-grid cf-card-grid-3">
             @* Visar alla träningspass *@
             @foreach (var trainingClass in Model)
@@ -23,7 +31,11 @@
                     <p><strong>Instructor:</strong> @trainingClass.InstructorName</p>
                     <p><strong>Time:</strong> @trainingClass.StartTime.ToString("yyyy-MM-dd HH:mm")</p>
 
-                    <a class="cf-btn-primary">Book Class</a>
+                    @* Formulär för att boka ett pass *@
+                    <form asp-controller="Booking" asp-action="Book" method="post">
+                        <input type="hidden" name="trainingClassId" value="@trainingClass.Id" />
+                        <button type="submit" class="cf-btn-primary">Book Class</button>
+                    </form>
                 </div>
             }
         </div>

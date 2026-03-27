@@ -984,3 +984,12 @@ textarea {
     margin-bottom: 10px;
     line-height: 1.6;
 }
+/* Meddelande efter bokning */
+.cf-booking-message {
+    margin-bottom: 24px;
+    padding: 14px 18px;
+    border-radius: 12px;
+    background: #e8ffd1;
+    color: #2c4a00;
+    font-weight: 600;
+}
