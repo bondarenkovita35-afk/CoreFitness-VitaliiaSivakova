@@ -993,3 +993,31 @@ textarea {
     color: #2c4a00;
     font-weight: 600;
 }
+/* Information på My Account */
+.cf-account-info p {
+    margin-bottom: 12px;
+    line-height: 1.6;
+}
+
+/* Lista med bokade pass */
+.cf-booking-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.cf-booking-item {
+    background: #f7f7f7;
+    border-radius: 14px;
+    padding: 18px;
+}
+
+    .cf-booking-item h3 {
+        margin-top: 0;
+        margin-bottom: 10px;
+    }
+
+    .cf-booking-item p {
+        margin-bottom: 8px;
+        line-height: 1.5;
+    }

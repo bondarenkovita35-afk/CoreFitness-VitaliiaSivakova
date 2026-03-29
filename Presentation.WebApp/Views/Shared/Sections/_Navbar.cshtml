@@ -2,14 +2,16 @@
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
+
 <header class="cf-header">
     <div class="cf-container cf-header-inner">
 
+        <!-- SVENSKA: Logotyp -->
         <a asp-controller="Home" asp-action="Index" class="cf-logo-wrap">
             <img src="~/images/logotype.png" alt="CoreFitness logo" class="cf-logo-image" />
-            
         </a>
 
+        <!-- SVENSKA: Navigationsmeny -->
         <nav class="cf-nav">
             <a asp-controller="Home" asp-action="Index">Fitness Centers</a>
             <a asp-controller="Memberships" asp-action="Index">Memberships</a>
@@ -18,21 +20,40 @@
             <a asp-controller="Home" asp-action="Index">Store</a>
         </nav>
 
+        <!-- SVENSKA: Höger del av header (login / konto) -->
         <div class="cf-nav-actions">
-            @* Visar olika knappar beroende på om användaren är inloggad *@
+
+            @* Visar olika innehåll beroende på om användaren är inloggad *@
             @if (SignInManager.IsSignedIn(User))
             {
-                <span class="cf-link-muted">Hej @User.Identity?.Name</span>
+                <!-- SVENSKA: Länk till användarens konto -->
+                <a asp-controller="MyAccount" asp-action="Index" class="cf-link-muted">
+                    My Account
+                </a>
 
-                <form asp-controller="Auth" asp-action="Logout" method="post">
+                <!-- SVENSKA: Visar användarens namn -->
+                <span class="cf-link-muted">
+                    Hej @User.Identity?.Name
+                </span>
+
+                <!-- SVENSKA: Logga ut -->
+                <form asp-controller="Auth" asp-action="Logout" method="post" style="display:inline;">
                     <button type="submit" class="cf-btn-accent">Logout</button>
                 </form>
             }
             else
             {
-                <a asp-controller="Auth" asp-action="SignIn" class="cf-link-muted">Sign In</a>
-                <a asp-controller="Auth" asp-action="SignUp" class="cf-btn-accent">Sign Up</a>
+                <!-- SVENSKA: Logga in -->
+                <a asp-controller="Auth" asp-action="SignIn" class="cf-link-muted">
+                    Sign In
+                </a>
+
+                <!-- SVENSKA: Registrera -->
+                <a asp-controller="Auth" asp-action="SignUp" class="cf-btn-accent">
+                    Sign Up
+                </a>
             }
         </div>
+
     </div>
 </header>

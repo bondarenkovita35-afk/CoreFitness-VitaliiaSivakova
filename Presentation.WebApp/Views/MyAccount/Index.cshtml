@@ -1,4 +1,6 @@
-﻿@{
+﻿@model Presentation.WebApp.Models.MyAccountViewModel
+
+@{
     ViewData["Title"] = "My Account";
 }
 
@@ -17,8 +19,6 @@
                     <a class="cf-account-link active">About Me</a>
                     <a class="cf-account-link">My Membership</a>
                     <a class="cf-account-link">My Bookings</a>
-                    <a class="cf-account-link">Sign Out</a>
-                    <a class="cf-account-link cf-danger-link">Remove Account</a>
                 </div>
             </aside>
 
@@ -26,64 +26,39 @@
                 <div class="cf-account-form-block">
                     <h2>About Me</h2>
 
-                    <form class="cf-form">
-                        <div class="cf-form-grid">
-                            <div>
-                                <label>First Name</label>
-                                <input class="cf-input" type="text" placeholder="Enter First Name" />
-                            </div>
-                            <div>
-                                <label>Last Name</label>
-                                <input class="cf-input" type="text" placeholder="Enter Last Name" />
-                            </div>
-                            <div>
-                                <label>Email Address</label>
-                                <input class="cf-input" type="email" placeholder="Enter Email Address" />
-                            </div>
-                            <div>
-                                <label>Phone Number</label>
-                                <input class="cf-input" type="text" placeholder="Enter Phone Number" />
-                            </div>
-                        </div>
-
-                        <div>
-                            <label>Profile Image</label>
-                            <input class="cf-input" type="file" />
-                        </div>
-
-                        <button type="submit" class="cf-btn-submit cf-save-btn">Save</button>
-                    </form>
+                    @* Visar användarens information *@
+                    <div class="cf-account-info">
+                        <p><strong>First Name:</strong> @Model.FirstName</p>
+                        <p><strong>Last Name:</strong> @Model.LastName</p>
+                        <p><strong>Email:</strong> @Model.Email</p>
+                        <p><strong>Phone Number:</strong> @(string.IsNullOrWhiteSpace(Model.PhoneNumber) ? "Not added" : Model.PhoneNumber)</p>
+                    </div>
                 </div>
 
                 <div class="cf-account-stats">
-                    <h2>My Statistics</h2>
+                    <h2>My Booked Classes</h2>
 
-                    <div class="cf-stat-item">
-                        <div class="cf-stat-row">
-                            <span>Check-in (last 30 days)</span>
-                            <span>25</span>
+                    @* Om inga bokningar finns *@
+                    @if (!Model.BookedTrainings.Any())
+                    {
+                        <p>You have no booked classes yet.</p>
+                    }
+                    else
+                    {
+                        <div class="cf-booking-list">
+                            @foreach (var booking in Model.BookedTrainings)
+                            {
+                                <div class="cf-booking-item">
+                                    <h3>@booking.Title</h3>
+                                    <p><strong>Category:</strong> @booking.Category</p>
+                                    <p><strong>Instructor:</strong> @booking.InstructorName</p>
+                                    <p><strong>Time:</strong> @booking.StartTime.ToString("yyyy-MM-dd HH:mm")</p>
+                                </div>
+                            }
                         </div>
-                        <div class="cf-progress"><span style="width: 82%"></span></div>
-                    </div>
-
-                    <div class="cf-stat-item">
-                        <div class="cf-stat-row">
-                            <span>Weight Goal</span>
-                            <span>50%</span>
-                        </div>
-                        <div class="cf-progress"><span style="width: 50%"></span></div>
-                    </div>
-
-                    <div class="cf-stat-item">
-                        <div class="cf-stat-row">
-                            <span>Current BMI</span>
-                            <span>27</span>
-                        </div>
-                        <div class="cf-progress"><span style="width: 66%"></span></div>
-                    </div>
+                    }
                 </div>
             </div>
         </div>
     </div>
 </section>
-
