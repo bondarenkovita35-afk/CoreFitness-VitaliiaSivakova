@@ -10,6 +10,14 @@
             <h1>My Account</h1>
         </div>
 
+        @* Visar meddelande efter bokning eller avbokning *@
+        @if (TempData["BookingMessage"] != null)
+        {
+            <div class="cf-booking-message">
+                @TempData["BookingMessage"]
+            </div>
+        }
+
         <div class="cf-account-layout">
             <aside class="cf-account-sidebar">
                 <img src="~/images/profile-image-avatar.png" alt="Profile avatar" class="cf-account-avatar" />
@@ -53,6 +61,12 @@
                                     <p><strong>Category:</strong> @booking.Category</p>
                                     <p><strong>Instructor:</strong> @booking.InstructorName</p>
                                     <p><strong>Time:</strong> @booking.StartTime.ToString("yyyy-MM-dd HH:mm")</p>
+
+                                    @* Formulär för att avboka ett pass *@
+                                    <form asp-controller="Booking" asp-action="Cancel" method="post">
+                                        <input type="hidden" name="bookingId" value="@booking.BookingId" />
+                                        <button type="submit" class="cf-btn-cancel">Cancel Booking</button>
+                                    </form>
                                 </div>
                             }
                         </div>

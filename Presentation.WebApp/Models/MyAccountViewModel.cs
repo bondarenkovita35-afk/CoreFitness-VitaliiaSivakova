@@ -22,6 +22,9 @@ public class MyAccountViewModel
 // ViewModel för en bokad träning
 public class MyBookedTrainingViewModel
 {
+    // ID för bokningen
+    public int BookingId { get; set; }
+
     // Titel på passet
     public string Title { get; set; } = null!;
 

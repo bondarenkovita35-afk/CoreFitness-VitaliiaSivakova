@@ -1021,3 +1021,14 @@ textarea {
         margin-bottom: 8px;
         line-height: 1.5;
     }
+/* Knapp för avbokning */
+.cf-btn-cancel {
+    background: #111;
+    color: #fff;
+    border: none;
+    border-radius: 999px;
+    padding: 12px 20px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 10px;
+}

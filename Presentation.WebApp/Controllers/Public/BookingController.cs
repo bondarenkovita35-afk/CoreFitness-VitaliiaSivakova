@@ -18,6 +18,35 @@ public class BookingController : Controller
     {
         _context = context;
     }
+    // Avbokar ett träningspass
+    [HttpPost]
+    public async Task<IActionResult> Cancel(int bookingId)
+    {
+        // Hämtar ID för inloggad användare
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        if (string.IsNullOrEmpty(userId))
+        {
+            return RedirectToAction("SignIn", "Auth");
+        }
+
+        // Hämtar bokningen som tillhör användaren
+        var booking = await _context.Bookings
+            .FirstOrDefaultAsync(b => b.Id == bookingId && b.UserId == userId);
+
+        if (booking == null)
+        {
+            TempData["BookingMessage"] = "Bokningen kunde inte hittas.";
+            return RedirectToAction("Index", "MyAccount");
+        }
+
+        // Tar bort bokningen från databasen
+        _context.Bookings.Remove(booking);
+        await _context.SaveChangesAsync();
+
+        TempData["BookingMessage"] = "Bokningen har tagits bort.";
+        return RedirectToAction("Index", "MyAccount");
+    }
 
     // Bokar ett träningspass
     [HttpPost]

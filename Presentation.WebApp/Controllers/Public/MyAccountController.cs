@@ -52,8 +52,13 @@ public class MyAccountController : Controller
             LastName = user.LastName,
             Email = user.Email ?? "",
             PhoneNumber = user.PhoneNumber,
+
             BookedTrainings = bookings.Select(b => new MyBookedTrainingViewModel
             {
+                // Sparar bokningens ID
+                BookingId = b.Id,
+
+                // Hämtar information från träningspasset
                 Title = b.TrainingClass.Title,
                 Category = b.TrainingClass.Category,
                 InstructorName = b.TrainingClass.InstructorName,
