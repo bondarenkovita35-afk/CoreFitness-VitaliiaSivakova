@@ -10,7 +10,14 @@
             <h1>My Account</h1>
         </div>
 
-        @* Visar meddelande efter bokning eller avbokning *@
+        @* Visar meddelande efter medlemskap eller avbokning *@
+        @if (TempData["MembershipMessage"] != null)
+        {
+            <div class="cf-booking-message">
+                @TempData["MembershipMessage"]
+            </div>
+        }
+
         @if (TempData["BookingMessage"] != null)
         {
             <div class="cf-booking-message">
@@ -44,9 +51,27 @@
                 </div>
 
                 <div class="cf-account-stats">
+                    <h2>My Membership</h2>
+
+                    @* Visar medlemskap om det finns *@
+                    @if (Model.Membership == null)
+                    {
+                        <p>You do not have a membership yet.</p>
+                    }
+                    else
+                    {
+                        <div class="cf-booking-item">
+                            <h3>@Model.Membership.Name</h3>
+                            <p><strong>Price:</strong> @Model.Membership.Price SEK</p>
+                            <p><strong>Status:</strong> @(Model.Membership.IsActive ? "Active" : "Inactive")</p>
+                        </div>
+                    }
+                </div>
+
+                <div class="cf-account-stats">
                     <h2>My Booked Classes</h2>
 
-                    @* Om inga bokningar finns *@
+                    @* Om användaren inte har några bokningar *@
                     @if (!Model.BookedTrainings.Any())
                     {
                         <p>You have no booked classes yet.</p>
@@ -62,7 +87,7 @@
                                     <p><strong>Instructor:</strong> @booking.InstructorName</p>
                                     <p><strong>Time:</strong> @booking.StartTime.ToString("yyyy-MM-dd HH:mm")</p>
 
-                                    @* Formulär för att avboka ett pass *@
+                                    @* Formulär för att avboka passet *@
                                     <form asp-controller="Booking" asp-action="Cancel" method="post">
                                         <input type="hidden" name="bookingId" value="@booking.BookingId" />
                                         <button type="submit" class="cf-btn-cancel">Cancel Booking</button>

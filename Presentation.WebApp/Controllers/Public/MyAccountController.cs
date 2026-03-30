@@ -38,27 +38,35 @@ public class MyAccountController : Controller
             return RedirectToAction("SignIn", "Auth");
         }
 
-        // Hämtar användarens bokningar tillsammans med träningspass
+        // Hämtar användarens medlemskap
+        var membership = await _context.Memberships
+            .FirstOrDefaultAsync(m => m.UserId == userId);
+
+        // Hämtar användarens bokningar och tillhörande träningspass
         var bookings = await _context.Bookings
             .Include(b => b.TrainingClass)
             .Where(b => b.UserId == userId)
             .OrderBy(b => b.TrainingClass.StartTime)
             .ToListAsync();
 
-        // Skapar ViewModel för sidan
+        // Skapar ViewModel
         var model = new MyAccountViewModel
         {
             FirstName = user.FirstName,
             LastName = user.LastName,
             Email = user.Email ?? "",
             PhoneNumber = user.PhoneNumber,
-
+            Membership = membership == null
+                ? null
+                : new MyMembershipViewModel
+                {
+                    Name = membership.Name,
+                    Price = membership.Price,
+                    IsActive = membership.IsActive
+                },
             BookedTrainings = bookings.Select(b => new MyBookedTrainingViewModel
             {
-                // Sparar bokningens ID
                 BookingId = b.Id,
-
-                // Hämtar information från träningspasset
                 Title = b.TrainingClass.Title,
                 Category = b.TrainingClass.Category,
                 InstructorName = b.TrainingClass.InstructorName,

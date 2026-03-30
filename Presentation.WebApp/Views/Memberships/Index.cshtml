@@ -25,7 +25,11 @@
                         <strong>495.00</strong>
                         <span> / monthly</span>
                     </div>
-                    <a class="cf-btn-primary">Join Now</a>
+                    <form asp-controller="Memberships" asp-action="Create" method="post">
+                        <input type="hidden" name="name" value="Standard Membership" />
+                        <input type="hidden" name="price" value="495.00" />
+                        <button type="submit" class="cf-btn-primary">Join Now</button>
+                    </form>
                 </div>
             </div>
 
@@ -45,7 +49,11 @@
                         <strong>595.00</strong>
                         <span> / monthly</span>
                     </div>
-                    <a class="cf-btn-primary">Join Now</a>
+                    <form asp-controller="Memberships" asp-action="Create" method="post">
+                        <input type="hidden" name="name" value="Premium Membership" />
+                        <input type="hidden" name="price" value="595.00" />
+                        <button type="submit" class="cf-btn-primary">Join Now</button>
+                    </form>
                 </div>
             </div>
 

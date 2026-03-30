@@ -15,23 +15,39 @@ public class MyAccountViewModel
     // Telefonnummer
     public string? PhoneNumber { get; set; }
 
+    // Användarens medlemskap
+    public MyMembershipViewModel? Membership { get; set; }
+
     // Lista med bokade träningspass
     public List<MyBookedTrainingViewModel> BookedTrainings { get; set; } = new();
 }
 
-// ViewModel för en bokad träning
+// ViewModel för medlemskap
+public class MyMembershipViewModel
+{
+    // Namn på medlemskapet
+    public string Name { get; set; } = null!;
+
+    // Pris
+    public decimal Price { get; set; }
+
+    // Om medlemskapet är aktivt
+    public bool IsActive { get; set; }
+}
+
+// ViewModel för ett bokat träningspass
 public class MyBookedTrainingViewModel
 {
-    // ID för bokningen
+    // Bokningens ID
     public int BookingId { get; set; }
 
-    // Titel på passet
+    // Titel på träningspasset
     public string Title { get; set; } = null!;
 
     // Kategori
     public string Category { get; set; } = null!;
 
-    // Instruktör
+    // Instruktörens namn
     public string InstructorName { get; set; } = null!;
 
     // Starttid
