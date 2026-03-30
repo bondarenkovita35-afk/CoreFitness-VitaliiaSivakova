@@ -6,12 +6,12 @@
 <header class="cf-header">
     <div class="cf-container cf-header-inner">
 
-        <!-- SVENSKA: Logotyp -->
+        <!-- Logotyp -->
         <a asp-controller="Home" asp-action="Index" class="cf-logo-wrap">
             <img src="~/images/logotype.png" alt="CoreFitness logo" class="cf-logo-image" />
         </a>
 
-        <!-- SVENSKA: Navigationsmeny -->
+        <!-- Navigationsmeny -->
         <nav class="cf-nav">
             <a asp-controller="Home" asp-action="Index">Fitness Centers</a>
             <a asp-controller="Memberships" asp-action="Index">Memberships</a>
@@ -20,31 +20,31 @@
             <a asp-controller="Home" asp-action="Index">Store</a>
         </nav>
 
-        <!-- SVENSKA: Höger del av header (login / konto) -->
+        <!-- Höger del av header (login / konto) -->
         <div class="cf-nav-actions">
 
             @* Visar olika innehåll beroende på om användaren är inloggad *@
             @if (SignInManager.IsSignedIn(User))
             {
-                <!-- SVENSKA: Länk till användarens konto -->
+                <!-- Länk till användarens konto -->
                 <a asp-controller="MyAccount" asp-action="Index" class="cf-link-muted">
                     My Account
                 </a>
 
 
-                <!-- SVENSKA: Logga ut -->
+                <!-- Logga ut -->
                 <form asp-controller="Auth" asp-action="Logout" method="post" style="display:inline;">
                     <button type="submit" class="cf-btn-accent">Logout</button>
                 </form>
             }
             else
             {
-                <!-- SVENSKA: Logga in -->
+                <!-- Logga in -->
                 <a asp-controller="Auth" asp-action="SignIn" class="cf-link-muted">
                     Sign In
                 </a>
 
-                <!-- SVENSKA: Registrera -->
+                <!-- Registrera -->
                 <a asp-controller="Auth" asp-action="SignUp" class="cf-btn-accent">
                     Sign Up
                 </a>
