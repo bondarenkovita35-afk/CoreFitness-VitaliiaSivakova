@@ -25,7 +25,7 @@ public class MembershipTests
         Assert.True(membership.IsActive);
         Assert.Equal(userId, membership.UserId);
     }
-
+    // Tester för Booking-entiteten
     [Fact]
     public void Booking_Should_Create_With_Correct_Values()
     {
@@ -39,6 +39,24 @@ public class MembershipTests
         // Assert
         Assert.Equal("user-456", booking.UserId);
         Assert.Equal(10, booking.TrainingClassId);
+    }
+
+    // Tester för TrainingClass-entiteten
+    [Fact]
+    public void TrainingClass_Should_Create_With_Correct_Values()
+    {
+        // Arrange
+        var trainingClass = new TrainingClass
+        {
+            Title = "Yoga Flow",
+            Category = "Yoga",
+            InstructorName = "Anna"
+        };
+
+        // Assert
+        Assert.Equal("Yoga Flow", trainingClass.Title);
+        Assert.Equal("Yoga", trainingClass.Category);
+        Assert.Equal("Anna", trainingClass.InstructorName);
     }
 }
 
