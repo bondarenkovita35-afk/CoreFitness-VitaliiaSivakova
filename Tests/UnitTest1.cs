@@ -58,6 +58,26 @@ public class MembershipTests
         Assert.Equal("Yoga", trainingClass.Category);
         Assert.Equal("Anna", trainingClass.InstructorName);
     }
+
+    // Tester för att säkerställa att Membership kan ha inaktiv status
+    [Fact]
+    public void Membership_Should_Allow_Inactive_Status()
+    {
+        // Arrange
+        var membership = new Membership
+        {
+            Name = "Silver",
+            Price = 299,
+            IsActive = false,
+            UserId = "user-789"
+        };
+
+        // Assert
+        Assert.Equal("Silver", membership.Name);
+        Assert.Equal(299, membership.Price);
+        Assert.False(membership.IsActive);
+        Assert.Equal("user-789", membership.UserId);
+    }
 }
 
 
