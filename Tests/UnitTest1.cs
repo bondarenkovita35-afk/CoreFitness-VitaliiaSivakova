@@ -25,4 +25,21 @@ public class MembershipTests
         Assert.True(membership.IsActive);
         Assert.Equal(userId, membership.UserId);
     }
+
+    [Fact]
+    public void Booking_Should_Create_With_Correct_Values()
+    {
+        // Arrange
+        var booking = new Booking
+        {
+            UserId = "user-456",
+            TrainingClassId = 10
+        };
+
+        // Assert
+        Assert.Equal("user-456", booking.UserId);
+        Assert.Equal(10, booking.TrainingClassId);
+    }
 }
+
+
