@@ -1,5 +1,8 @@
-﻿using Infrastructure.Persistence.Contexts;
+﻿using Infrastructure.Identity;
+using Infrastructure.Persistence.Contexts;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Presentation.WebApp.Models;
@@ -12,11 +15,13 @@ namespace Presentation.WebApp.Controllers.Public;
 public class MyAccountController : Controller
 {
     private readonly ApplicationDbContext _context;
+    private readonly UserManager<ApplicationUser> _userManager;
 
     // Konstruktor
-    public MyAccountController(ApplicationDbContext context)
+    public MyAccountController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
     {
         _context = context;
+        _userManager = userManager;
     }
 
     // Visar sidan My Account
@@ -146,5 +151,50 @@ public class MyAccountController : Controller
         TempData["ProfileMessage"] = "Your profile has been updated.";
 
         return RedirectToAction(nameof(Index));
+    }
+    // Visar sida för att ta bort konto
+    [HttpGet]
+    public IActionResult Delete()
+    {
+        return View();
+    }
+
+    // Tar bort konto och all data
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeleteConfirmed()
+    {
+        // Hämtar användarens ID
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        if (string.IsNullOrEmpty(userId))
+            return RedirectToAction("SignIn", "Auth");
+
+        // Hämtar användaren
+        var user = await _userManager.FindByIdAsync(userId);
+
+        if (user == null)
+            return RedirectToAction("SignIn", "Auth");
+
+        // Tar bort alla bokningar
+        var bookings = _context.Bookings.Where(b => b.UserId == userId);
+        _context.Bookings.RemoveRange(bookings);
+
+        // Tar bort medlemskap
+        var membership = await _context.Memberships.FirstOrDefaultAsync(m => m.UserId == userId);
+        if (membership != null)
+        {
+            _context.Memberships.Remove(membership);
+        }
+
+        await _context.SaveChangesAsync();
+
+        // Tar bort användaren via Identity
+        await _userManager.DeleteAsync(user);
+
+        // Loggar ut användaren
+        await HttpContext.SignOutAsync();
+
+        return RedirectToAction("Index", "Home");
     }
 }

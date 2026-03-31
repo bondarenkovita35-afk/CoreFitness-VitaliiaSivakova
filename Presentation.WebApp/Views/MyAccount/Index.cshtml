@@ -57,6 +57,9 @@
                         <p><strong>Phone Number:</strong> @(string.IsNullOrWhiteSpace(Model.PhoneNumber) ? "Not added" : Model.PhoneNumber)</p>
                         <div style="margin-top: 20px;">
                             <a asp-action="Edit" class="cf-btn-primary">Edit Profile</a>
+                            <div style="margin-top: 10px;">
+                                <a asp-action="Delete" class="cf-btn-secondary">Delete Account</a>
+                            </div>
                         </div>
                     </div>
                 </div>
