@@ -1032,3 +1032,31 @@ textarea {
     cursor: pointer;
     margin-top: 10px;
 }
+/* Secondary button (Cancel) - samma storlek som primary */
+.cf-btn-secondary {
+    display: inline-block;
+    /* samma padding som primary */
+    padding: 10px 20px;
+    /* samma form */
+    border-radius: 999px;
+    /* gör att den ser ut som en riktig knapp */
+    border: 2px solid #c8ff2f;
+    /* ingen bakgrund */
+    background-color: transparent;
+    /* textfärg */
+    color: #c8ff2f;
+    /* samma font */
+    font-weight: 600;
+    font-size: 14px;
+    /* gör att den ser jämn ut */
+    text-align: center;
+    cursor: pointer;
+    /* transition för snygg hover */
+    transition: all 0.2s ease-in-out;
+}
+
+    /* Hover effekt */
+    .cf-btn-secondary:hover {
+        background-color: #c8ff2f;
+        color: #000;
+    }

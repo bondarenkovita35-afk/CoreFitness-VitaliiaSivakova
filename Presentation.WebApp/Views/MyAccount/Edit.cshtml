@@ -1,0 +1,53 @@
+﻿@model Presentation.WebApp.Models.EditProfileViewModel
+
+@{
+    ViewData["Title"] = "Edit Profile";
+}
+
+<section class="cf-page-section">
+    <div class="cf-container">
+        <div class="cf-section-heading">
+            <h1>Edit Profile</h1>
+        </div>
+
+        <div class="cf-account-content">
+            <div class="cf-account-form-block">
+                <h2>Update your information</h2>
+
+                <form asp-action="Edit" method="post" novalidate>
+                    @Html.AntiForgeryToken()
+
+                    @* Visar fel om något är fel i formuläret *@
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="cf-form-group">
+                        <label asp-for="FirstName"></label>
+                        <input asp-for="FirstName" class="cf-input" />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+
+                    <div class="cf-form-group">
+                        <label asp-for="LastName"></label>
+                        <input asp-for="LastName" class="cf-input" />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+
+                    <div class="cf-form-group">
+                        <label asp-for="PhoneNumber"></label>
+                        <input asp-for="PhoneNumber" class="cf-input" />
+                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                    </div>
+
+                    <div style="margin-top: 20px; display: flex; gap: 12px;">
+                        <button type="submit" class="cf-btn-primary">Save Changes</button>
+                        <a asp-action="Index" class="cf-btn-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

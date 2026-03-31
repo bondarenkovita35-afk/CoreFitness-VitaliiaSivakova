@@ -10,7 +10,7 @@
             <h1>My Account</h1>
         </div>
 
-        @* Visar meddelande efter medlemskap eller avbokning *@
+        @* Visar meddelande efter medlemskap, bokning eller profiluppdatering *@
         @if (TempData["MembershipMessage"] != null)
         {
             <div class="cf-booking-message">
@@ -24,6 +24,14 @@
                 @TempData["BookingMessage"]
             </div>
         }
+
+        @if (TempData["ProfileMessage"] != null)
+        {
+            <div class="cf-booking-message">
+                @TempData["ProfileMessage"]
+            </div>
+        }
+        
 
         <div class="cf-account-layout">
             <aside class="cf-account-sidebar">
@@ -47,6 +55,9 @@
                         <p><strong>Last Name:</strong> @Model.LastName</p>
                         <p><strong>Email:</strong> @Model.Email</p>
                         <p><strong>Phone Number:</strong> @(string.IsNullOrWhiteSpace(Model.PhoneNumber) ? "Not added" : Model.PhoneNumber)</p>
+                        <div style="margin-top: 20px;">
+                            <a asp-action="Edit" class="cf-btn-primary">Edit Profile</a>
+                        </div>
                     </div>
                 </div>
 
