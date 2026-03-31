@@ -38,10 +38,22 @@ public class MembershipsController : Controller
             // Om ej inloggad → redirect till login
             return RedirectToAction("SignIn", "Auth");
         }
+        // Säkerställer rätt pris om inget pris kom in
+        if (price <= 0)
+        {
+            if (name == "Standard Membership")
+            {
+                price = 495.00m;
+            }
+            else if (name == "Premium Membership")
+            {
+                price = 595.00m;
+            }
+        }
 
-        // Letar efter befintligt medlemskap
-        var existingMembership = await _context.Memberships
-            .FirstOrDefaultAsync(m => m.UserId == userId);
+                // Letar efter befintligt medlemskap
+                var existingMembership = await _context.Memberships
+                    .FirstOrDefaultAsync(m => m.UserId == userId);
 
         if (existingMembership != null)
         {
