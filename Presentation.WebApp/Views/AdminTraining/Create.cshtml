@@ -1,0 +1,62 @@
+﻿@model Presentation.WebApp.Models.CreateTrainingClassViewModel
+
+@{
+    ViewData["Title"] = "Create Training Class";
+}
+
+<section class="cf-page-section">
+    <div class="cf-container">
+        <div class="cf-section-heading">
+            <h1>Create Training Class</h1>
+        </div>
+
+        <div class="cf-account-content">
+            <div class="cf-account-form-block">
+                <form asp-action="Create" method="post" novalidate>
+                    @Html.AntiForgeryToken()
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="cf-form-group">
+                        <label asp-for="Title"></label>
+                        <input asp-for="Title" class="cf-input" />
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+
+                    <div class="cf-form-group">
+                        <label asp-for="Description"></label>
+                        <input asp-for="Description" class="cf-input" />
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+
+                    <div class="cf-form-group">
+                        <label asp-for="Category"></label>
+                        <input asp-for="Category" class="cf-input" />
+                        <span asp-validation-for="Category" class="text-danger"></span>
+                    </div>
+
+                    <div class="cf-form-group">
+                        <label asp-for="InstructorName"></label>
+                        <input asp-for="InstructorName" class="cf-input" />
+                        <span asp-validation-for="InstructorName" class="text-danger"></span>
+                    </div>
+
+                    <div class="cf-form-group">
+                        <label asp-for="StartTime"></label>
+                        <input asp-for="StartTime" type="datetime-local" class="cf-input" />
+                        <span asp-validation-for="StartTime" class="text-danger"></span>
+                    </div>
+
+                    <div style="margin-top: 20px; display: flex; gap: 12px; flex-wrap: wrap;">
+                        <button type="submit" class="cf-btn-primary">Create</button>
+                        <a asp-controller="Training" asp-action="Index" class="cf-btn-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

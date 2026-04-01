@@ -59,7 +59,7 @@ using (var scope = app.Services.CreateScope())
     }
 
     // Lägg din egen inloggningsmail här
-    var adminEmail = "vitaliia@test.com";
+    var adminEmail = "moriahek@gmail.com";
 
     // Hämtar användaren
     var adminUser = await userManager.FindByEmailAsync(adminEmail);

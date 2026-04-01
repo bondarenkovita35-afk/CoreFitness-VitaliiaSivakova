@@ -11,11 +11,28 @@
             <p class="cf-section-text">Choose a class and start your fitness journey.</p>
         </div>
 
-        @* Visar meddelande efter bokning *@
+        @* Visar meddelande efter skapande, borttagning eller bokning *@
+        @if (TempData["TrainingMessage"] != null)
+        {
+            <div class="cf-booking-message">
+                @TempData["TrainingMessage"]
+            </div>
+        }
+
         @if (TempData["BookingMessage"] != null)
         {
             <div class="cf-booking-message">
                 @TempData["BookingMessage"]
+            </div>
+        }
+
+        @* Visar knapp för admin *@
+        @if (User.IsInRole("Admin"))
+        {
+            <div style="margin-bottom: 20px;">
+                <a asp-controller="AdminTraining" asp-action="Create" class="cf-btn-primary">
+                    Create Training Class
+                </a>
             </div>
         }
 
@@ -33,9 +50,20 @@
 
                     @* Formulär för att boka ett pass *@
                     <form asp-controller="Booking" asp-action="Book" method="post">
+                        @Html.AntiForgeryToken()
                         <input type="hidden" name="trainingClassId" value="@trainingClass.Id" />
                         <button type="submit" class="cf-btn-primary">Book Class</button>
                     </form>
+
+                    @* Visar delete-knapp bara för admin *@
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <form asp-controller="AdminTraining" asp-action="Delete" method="post" style="margin-top: 12px;">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="id" value="@trainingClass.Id" />
+                            <button type="submit" class="cf-btn-secondary">Delete</button>
+                        </form>
+                    }
                 </div>
             }
         </div>
