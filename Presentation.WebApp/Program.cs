@@ -1,7 +1,6 @@
 ﻿using Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Infrastructure.Persistence.Contexts;
-using Microsoft.EntityFrameworkCore;
 using Presentation.WebApp.Data;
 using Infrastructure.Extensions;
 using Microsoft.AspNetCore.Authentication.Google;
@@ -72,11 +71,41 @@ using (var scope = app.Services.CreateScope())
     if (!await roleManager.RoleExistsAsync("Member"))
         await roleManager.CreateAsync(new IdentityRole("Member"));
 
-    var adminEmail = "moriahek@gmail.com";
+    var adminEmail = "admin@corefitness.com";
+    var adminPassword = "Admin123!";
+
     var adminUser = await userManager.FindByEmailAsync(adminEmail);
 
+    // Skapar admin-användare om den inte finns
+    if (adminUser == null)
+    {
+        adminUser = new ApplicationUser
+        {
+            UserName = adminEmail,
+            Email = adminEmail,
+            EmailConfirmed = true,
+
+            FirstName = "Admin",
+            LastName = "CoreFitness"
+
+        };
+
+        var createResult = await userManager.CreateAsync(adminUser, adminPassword);
+
+        if (!createResult.Succeeded)
+        {
+            foreach (var error in createResult.Errors)
+            {
+                Console.WriteLine(error.Description);
+            }
+        }
+    }
+
+    // Lägger till Admin-roll om den saknas
     if (adminUser != null && !await userManager.IsInRoleAsync(adminUser, "Admin"))
-         await userManager.AddToRoleAsync(adminUser, "Admin");
+    {
+        await userManager.AddToRoleAsync(adminUser, "Admin");
+    }
 }
 
 app.Run();
