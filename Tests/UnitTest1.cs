@@ -54,11 +54,8 @@ public class MembershipTests
     public void Booking_Should_Create_With_Correct_Values()
     {
         // Arrange
-        var booking = new Booking
-        {
-            UserId = "user-456",
-            TrainingClassId = 10
-        };
+        var booking = new Booking("user-456", 10);
+       
 
         // Assert
         Assert.Equal("user-456", booking.UserId);

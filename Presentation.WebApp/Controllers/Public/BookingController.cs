@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Exceptions;
 using Infrastructure.Persistence.Contexts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +9,7 @@ using System.Security.Claims;
 namespace Presentation.WebApp.Controllers.Public;
 
 // Controller för bokning av träningspass
-[Authorize]
+[Authorize(Roles = "Member,Admin")]
 public class BookingController : Controller
 {
     private readonly ApplicationDbContext _context;
@@ -18,6 +19,7 @@ public class BookingController : Controller
     {
         _context = context;
     }
+
     // Avbokar ett träningspass
     [HttpPost]
     public async Task<IActionResult> Cancel(int bookingId)
@@ -52,37 +54,39 @@ public class BookingController : Controller
     [HttpPost]
     public async Task<IActionResult> Book(int trainingClassId)
     {
-        // Hämtar inloggad användares ID
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-        if (string.IsNullOrEmpty(userId))
+        try
         {
-            return RedirectToAction("SignIn", "Auth");
-        }
+            // Hämtar inloggad användares ID
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-        // Kontrollerar om användaren redan har bokat passet
-        var existingBooking = await _context.Bookings
-            .FirstOrDefaultAsync(b => b.UserId == userId && b.TrainingClassId == trainingClassId);
+            if (string.IsNullOrEmpty(userId))
+            {
+                return RedirectToAction("SignIn", "Auth");
+            }
 
-        if (existingBooking != null)
-        {
-            TempData["BookingMessage"] = "Du har redan bokat detta pass.";
+            // Kontrollerar om användaren redan har bokat passet
+            var existingBooking = await _context.Bookings
+                .FirstOrDefaultAsync(b => b.UserId == userId && b.TrainingClassId == trainingClassId);
+
+            if (existingBooking != null)
+            {
+                throw new DuplicateBookingException();
+            }
+
+            // Skapar ny bokning via domänkonstruktor
+            var booking = new Booking(userId, trainingClassId);
+
+            // Sparar bokningen i databasen
+            _context.Bookings.Add(booking);
+            await _context.SaveChangesAsync();
+
+            TempData["BookingMessage"] = "Passet har bokats!";
             return RedirectToAction("Index", "Training");
         }
-
-        // Skapar ny bokning
-        var booking = new Booking
+        catch (DuplicateBookingException ex)
         {
-            UserId = userId,
-            TrainingClassId = trainingClassId,
-            BookedAt = DateTime.UtcNow
-        };
-
-        // Sparar bokningen i databasen
-        _context.Bookings.Add(booking);
-        await _context.SaveChangesAsync();
-
-        TempData["BookingMessage"] = "Passet har bokats!";
-        return RedirectToAction("Index", "Training");
+            TempData["BookingMessage"] = ex.Message;
+            return RedirectToAction("Index", "Training");
+        }
     }
 }

@@ -22,11 +22,7 @@ public class BookingIntegrationTests
         // Arrange
         var context = CreateDbContext();
 
-        var booking = new Booking
-        {
-            UserId = "test-user"
-            // ❗ УБРАЛИ Guid и CreatedAt
-        };
+        var booking = new Booking("test-user", 10);
 
         // Act
         context.Bookings.Add(booking);
@@ -36,6 +32,9 @@ public class BookingIntegrationTests
         var result = await context.Bookings.FirstOrDefaultAsync();
 
         Assert.NotNull(result);
-        Assert.Equal("test-user", result.UserId);
+        var savedBooking = result!;
+
+        Assert.Equal("test-user", savedBooking.UserId);
+        Assert.Equal(10, savedBooking.TrainingClassId);
     }
 }

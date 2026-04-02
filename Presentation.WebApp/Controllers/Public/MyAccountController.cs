@@ -11,7 +11,7 @@ using System.Security.Claims;
 namespace Presentation.WebApp.Controllers.Public;
 
 // Controller för användarens privata sida
-[Authorize]
+[Authorize(Roles = "Member,Admin")]
 public class MyAccountController : Controller
 {
     private readonly ApplicationDbContext _context;
@@ -51,7 +51,7 @@ public class MyAccountController : Controller
         var bookings = await _context.Bookings
             .Include(b => b.TrainingClass)
             .Where(b => b.UserId == userId)
-            .OrderBy(b => b.TrainingClass.StartTime)
+            .OrderBy(b => b.TrainingClass != null ? b.TrainingClass.StartTime : DateTime.MaxValue)
             .ToListAsync();
 
         // Skapar ViewModel
@@ -72,10 +72,10 @@ public class MyAccountController : Controller
             BookedTrainings = bookings.Select(b => new MyBookedTrainingViewModel
             {
                 BookingId = b.Id,
-                Title = b.TrainingClass.Title,
-                Category = b.TrainingClass.Category,
-                InstructorName = b.TrainingClass.InstructorName,
-                StartTime = b.TrainingClass.StartTime
+                Title = b.TrainingClass?.Title ?? "No training",
+                Category = b.TrainingClass?.Category ?? "",
+                InstructorName = b.TrainingClass?.InstructorName ?? "",
+                StartTime = b.TrainingClass?.StartTime ?? DateTime.MinValue
             }).ToList()
         };
 
@@ -152,6 +152,7 @@ public class MyAccountController : Controller
 
         return RedirectToAction(nameof(Index));
     }
+
     // Visar sida för att ta bort konto
     [HttpGet]
     public IActionResult Delete()
