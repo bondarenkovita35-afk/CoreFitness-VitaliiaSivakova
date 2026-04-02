@@ -10,7 +10,7 @@ public static class DbSeeder
     public static async Task SeedTrainingClassesAsync(ApplicationDbContext context)
     {
         // Ser till att databasen finns
-        await context.Database.MigrateAsync();
+        await context.Database.EnsureCreatedAsync();
 
         // Om det redan finns träningspass, gör inget
         if (await context.TrainingClasses.AnyAsync())
