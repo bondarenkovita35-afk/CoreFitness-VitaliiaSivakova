@@ -14,6 +14,20 @@ The application allows users to:
 - edit profile information
 - delete account and personal data
 
+## Admin Access
+
+For testing admin functionality, use the following credentials:
+
+- Email: admin@corefitness.com  
+- Password: Admin123!
+
+The admin user is automatically seeded on application startup.
+
+### What admin can do:
+- Create training classes
+- Delete training classes
+- Access admin functionality not available to regular users
+
 ## Technologies
 
 - ASP.NET Core MVC
