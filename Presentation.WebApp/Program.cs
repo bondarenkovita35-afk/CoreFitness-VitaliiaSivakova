@@ -1,4 +1,4 @@
-using Infrastructure.Identity;
+ï»¿using Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Infrastructure.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
@@ -8,22 +8,31 @@ using Microsoft.AspNetCore.Authentication.Google;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Lägger till stöd för MVC
+// LÃ¤gger till stÃ¶d fÃ¶r MVC
 builder.Services.AddControllersWithViews();
 
-// Lägger till Infrastructure och databas/Identity
+// LÃ¤gger till Infrastructure och databas/Identity
 builder.Services.AddInfrastructure(builder.Configuration, builder.Environment);
 
-builder.Services
-    .AddAuthentication()
-    .AddGoogle(options =>
-    {
-        // Hämtar Google ClientId från konfiguration
-        options.ClientId = builder.Configuration["Authentication:Google:ClientId"]!;
+// HÃ¤mtar Google-instÃ¤llningar frÃ¥n konfiguration
+var googleClientId = builder.Configuration["Authentication:Google:ClientId"];
+var googleClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
 
-        // Hämtar Google ClientSecret från konfiguration
-        options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"]!;
-    });
+// LÃ¤gger bara till Google-inloggning om nycklar finns
+if (!string.IsNullOrWhiteSpace(googleClientId) &&
+    !string.IsNullOrWhiteSpace(googleClientSecret))
+{
+    builder.Services
+        .AddAuthentication()
+        .AddGoogle(options =>
+        {
+            // Google ClientId
+            options.ClientId = googleClientId;
+
+            // Google ClientSecret
+            options.ClientSecret = googleClientSecret;
+        });
+}
 
 var app = builder.Build();
 
@@ -38,7 +47,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-// Aktiverar inloggning och behörighet
+// Aktiverar inloggning och behÃ¶righet
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -46,7 +55,7 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-// Lägger in testdata och roller vid start
+// LÃ¤gger in testdata och roller vid start
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
@@ -55,32 +64,19 @@ using (var scope = app.Services.CreateScope())
     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
     var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
 
-    // Lägger in träningspass
     await DbSeeder.SeedTrainingClassesAsync(context);
 
-    // Skapar rollen Admin om den inte finns
     if (!await roleManager.RoleExistsAsync("Admin"))
-    {
         await roleManager.CreateAsync(new IdentityRole("Admin"));
-    }
 
-    // Skapar rollen Member om den inte finns
     if (!await roleManager.RoleExistsAsync("Member"))
-    {
         await roleManager.CreateAsync(new IdentityRole("Member"));
-    }
 
-    // Lägg din egen inloggningsmail här
     var adminEmail = "moriahek@gmail.com";
-
-    // Hämtar användaren
     var adminUser = await userManager.FindByEmailAsync(adminEmail);
 
-    // Ger Admin-roll till användaren
     if (adminUser != null && !await userManager.IsInRoleAsync(adminUser, "Admin"))
-    {
-        await userManager.AddToRoleAsync(adminUser, "Admin");
-    }
+         await userManager.AddToRoleAsync(adminUser, "Admin");
 }
 
 app.Run();
