@@ -1,7 +1,9 @@
 ﻿using Infrastructure.Identity;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.WebApp.Models;
+using System.Security.Claims;
 
 namespace Presentation.WebApp.Controllers;
 
@@ -119,5 +121,90 @@ public class AuthController : Controller
     public IActionResult SetPassword()
     {
         return View();
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult ExternalLogin(string provider, string returnUrl = "/")
+    {
+        // Skapar redirect-url efter extern inloggning
+        var redirectUrl = Url.Action(nameof(ExternalLoginCallback), "Auth", new { returnUrl });
+
+        // Startar extern inloggning med vald provider
+        var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
+
+        return Challenge(properties, provider);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> ExternalLoginCallback(string? returnUrl = "/", string? remoteError = null)
+    {
+        if (remoteError != null)
+        {
+            TempData["AuthMessage"] = $"External login error: {remoteError}";
+            return RedirectToAction("SignIn");
+        }
+
+        var info = await _signInManager.GetExternalLoginInfoAsync();
+        if (info == null)
+        {
+            TempData["AuthMessage"] = "Could not load external login information.";
+            return RedirectToAction("SignIn");
+        }
+
+        // Försöker logga in användaren med extern provider
+        var signInResult = await _signInManager.ExternalLoginSignInAsync(
+            info.LoginProvider,
+            info.ProviderKey,
+            isPersistent: false,
+            bypassTwoFactor: true);
+
+        if (signInResult.Succeeded)
+        {
+            return LocalRedirect(returnUrl ?? "/");
+        }
+
+        // Hämtar e-post från Google
+        var email = info.Principal.FindFirstValue(System.Security.Claims.ClaimTypes.Email);
+        var firstName = info.Principal.FindFirstValue(System.Security.Claims.ClaimTypes.GivenName) ?? "Google";
+        var lastName = info.Principal.FindFirstValue(System.Security.Claims.ClaimTypes.Surname) ?? "User";
+
+        if (string.IsNullOrWhiteSpace(email))
+        {
+            TempData["AuthMessage"] = "Google did not return an email address.";
+            return RedirectToAction("SignIn");
+        }
+
+        // Skapar ny användare om den inte finns
+        var user = await _userManager.FindByEmailAsync(email);
+        if (user == null)
+        {
+            user = new ApplicationUser
+            {
+                UserName = email,
+                Email = email,
+                FirstName = firstName,
+                LastName = lastName
+            };
+
+            var createResult = await _userManager.CreateAsync(user);
+            if (!createResult.Succeeded)
+            {
+                TempData["AuthMessage"] = "Could not create local user account.";
+                return RedirectToAction("SignIn");
+            }
+        }
+
+        // Kopplar extern login till användaren
+        var addLoginResult = await _userManager.AddLoginAsync(user, info);
+        if (!addLoginResult.Succeeded)
+        {
+            TempData["AuthMessage"] = "Could not link Google login to local account.";
+            return RedirectToAction("SignIn");
+        }
+
+        await _signInManager.SignInAsync(user, isPersistent: false);
+
+        return LocalRedirect(returnUrl ?? "/");
     }
 }

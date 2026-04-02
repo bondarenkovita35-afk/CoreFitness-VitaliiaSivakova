@@ -35,6 +35,13 @@
             <button type="submit" class="cf-btn-primary">Sign In</button>
         </form>
 
+        @* Startar Google-inloggning *@
+        <form asp-action="ExternalLogin" asp-controller="Auth" method="post" style="margin-top: 16px;">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="provider" value="Google" />
+            <button type="submit" class="cf-btn-secondary">Login with Google</button>
+        </form>
+
         <p class="cf-auth-link">
             Don’t have an account?
             <a asp-controller="Auth" asp-action="SignUp">Sign Up</a>

@@ -4,6 +4,7 @@ using Infrastructure.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Presentation.WebApp.Data;
 using Infrastructure.Extensions;
+using Microsoft.AspNetCore.Authentication.Google;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,17 @@ builder.Services.AddControllersWithViews();
 
 // Lägger till Infrastructure och databas/Identity
 builder.Services.AddInfrastructure(builder.Configuration, builder.Environment);
+
+builder.Services
+    .AddAuthentication()
+    .AddGoogle(options =>
+    {
+        // Hämtar Google ClientId från konfiguration
+        options.ClientId = builder.Configuration["Authentication:Google:ClientId"]!;
+
+        // Hämtar Google ClientSecret från konfiguration
+        options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"]!;
+    });
 
 var app = builder.Build();
 
