@@ -60,6 +60,9 @@ public class AuthController : Controller
 
         if (result.Succeeded)
         {
+            // Lägger till rollen Member för ny användare
+            await _userManager.AddToRoleAsync(user, "Member");
+           
             // Loggar in användaren direkt efter registrering
             await _signInManager.SignInAsync(user, isPersistent: false);
 
@@ -193,6 +196,13 @@ public class AuthController : Controller
                 TempData["AuthMessage"] = "Could not create local user account.";
                 return RedirectToAction("SignIn");
             }
+
+            // Lägger till rollen Member för Google-användare
+            if (!await _userManager.IsInRoleAsync(user, "Member"))
+            {
+                await _userManager.AddToRoleAsync(user, "Member");
+            }
+
         }
 
         // Kopplar extern login till användaren

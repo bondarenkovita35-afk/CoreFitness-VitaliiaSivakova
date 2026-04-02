@@ -1,9 +1,10 @@
 ﻿using Domain.Entities;
+using Domain.Exceptions;
 using Xunit;
 
 namespace Tests;
 
-// Tester för Membership-entiteten
+// Tester för domänentiteter
 public class MembershipTests
 {
     [Fact]
@@ -11,13 +12,7 @@ public class MembershipTests
     {
         // Arrange
         var userId = "user-123";
-        var membership = new Membership
-        {
-            Name = "Gold",
-            Price = 499,
-            IsActive = true,
-            UserId = userId
-        };
+        var membership = new Membership("Gold", 499, userId);
 
         // Assert
         Assert.Equal("Gold", membership.Name);
@@ -25,7 +20,36 @@ public class MembershipTests
         Assert.True(membership.IsActive);
         Assert.Equal(userId, membership.UserId);
     }
-    // Tester för Booking-entiteten
+
+    [Fact]
+    public void Membership_Should_Throw_Exception_When_Name_Is_Empty()
+    {
+        // Arrange + Assert
+        Assert.Throws<InvalidMembershipException>(() =>
+            new Membership("", 499, "user-123"));
+    }
+
+    [Fact]
+    public void Membership_Should_Throw_Exception_When_Price_Is_Invalid()
+    {
+        // Arrange + Assert
+        Assert.Throws<InvalidMembershipException>(() =>
+            new Membership("Silver", 0, "user-123"));
+    }
+
+    [Fact]
+    public void Membership_Should_Be_Deactivated()
+    {
+        // Arrange
+        var membership = new Membership("Silver", 299, "user-789");
+
+        // Act
+        membership.Deactivate();
+
+        // Assert
+        Assert.False(membership.IsActive);
+    }
+
     [Fact]
     public void Booking_Should_Create_With_Correct_Values()
     {
@@ -41,7 +65,6 @@ public class MembershipTests
         Assert.Equal(10, booking.TrainingClassId);
     }
 
-    // Tester för TrainingClass-entiteten
     [Fact]
     public void TrainingClass_Should_Create_With_Correct_Values()
     {
@@ -58,26 +81,4 @@ public class MembershipTests
         Assert.Equal("Yoga", trainingClass.Category);
         Assert.Equal("Anna", trainingClass.InstructorName);
     }
-
-    // Tester för att säkerställa att Membership kan ha inaktiv status
-    [Fact]
-    public void Membership_Should_Allow_Inactive_Status()
-    {
-        // Arrange
-        var membership = new Membership
-        {
-            Name = "Silver",
-            Price = 299,
-            IsActive = false,
-            UserId = "user-789"
-        };
-
-        // Assert
-        Assert.Equal("Silver", membership.Name);
-        Assert.Equal(299, membership.Price);
-        Assert.False(membership.IsActive);
-        Assert.Equal("user-789", membership.UserId);
-    }
 }
-
-

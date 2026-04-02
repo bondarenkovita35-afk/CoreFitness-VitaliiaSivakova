@@ -8,7 +8,7 @@ using System.Security.Claims;
 namespace Presentation.WebApp.Controllers.Public;
 
 // Controller för medlemskap
-[Authorize]
+[Authorize(Roles = "Member,Admin")]
 public class MembershipsController : Controller
 {
     private readonly ApplicationDbContext _context;
@@ -38,6 +38,7 @@ public class MembershipsController : Controller
             // Om ej inloggad → redirect till login
             return RedirectToAction("SignIn", "Auth");
         }
+
         // Säkerställer rätt pris om inget pris kom in
         if (price <= 0)
         {
@@ -51,27 +52,20 @@ public class MembershipsController : Controller
             }
         }
 
-                // Letar efter befintligt medlemskap
-                var existingMembership = await _context.Memberships
-                    .FirstOrDefaultAsync(m => m.UserId == userId);
+        // Letar efter befintligt medlemskap
+        var existingMembership = await _context.Memberships
+            .FirstOrDefaultAsync(m => m.UserId == userId);
 
         if (existingMembership != null)
         {
-            // Uppdaterar befintligt medlemskap
-            existingMembership.Name = name;
-            existingMembership.Price = price;
-            existingMembership.IsActive = true;
+            // Uppdaterar befintligt medlemskap via domänmetod
+            existingMembership.Update(name, price);
+            existingMembership.Activate();
         }
         else
         {
-            // Skapar nytt medlemskap
-            var membership = new Membership
-            {
-                Name = name,
-                Price = price,
-                IsActive = true,
-                UserId = userId
-            };
+            // Skapar nytt medlemskap via konstruktor
+            var membership = new Membership(name, price, userId);
 
             _context.Memberships.Add(membership);
         }

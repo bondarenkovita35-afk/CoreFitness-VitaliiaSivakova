@@ -22,13 +22,7 @@ public class MembershipIntegrationTests
         // Arrange
         var context = CreateDbContext();
 
-        var membership = new Membership
-        {
-            Name = "Gold",
-            Price = 499,
-            IsActive = true,
-            UserId = "test-user"
-        };
+        var membership = new Membership("Gold", 499, "test-user");
 
         // Act
         context.Memberships.Add(membership);
